@@ -88,4 +88,12 @@ public class UsuarioBuilder {
                 .password("mypass5678")
                 .dateCreation(new Date()).build();
     }
+
+    public UsuarioDto buildUsuarioCreatedDto(UsuarioDto usuarioDtoMock) {
+        usuarioDtoMock.setId(100);
+        usuarioDtoMock.setDateCreation(new Date());
+        return usuarioDtoMock;
+    }
+
+
 }

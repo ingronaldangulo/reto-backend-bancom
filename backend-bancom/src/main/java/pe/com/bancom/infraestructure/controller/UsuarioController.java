@@ -3,9 +3,7 @@ package pe.com.bancom.infraestructure.controller;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pe.com.bancom.domain.dto.UsuarioDto;
 import pe.com.bancom.domain.service.impl.UsuarioServiceImpl;
 
@@ -23,5 +21,23 @@ public class UsuarioController {
     public ResponseEntity<List<UsuarioDto>> findAll() {
         log.info("listar usuarios.");
         return ResponseEntity.ok(usuarioService.findAll());
+    }
+
+    @PostMapping("/crear")
+    public ResponseEntity<UsuarioDto> create(@RequestBody UsuarioDto usuarioDto) {
+        log.info("crear usuario");
+        return ResponseEntity.ok(usuarioService.create(usuarioDto));
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<UsuarioDto> update(UsuarioDto usuarioDto) {
+        log.info("modificar usuario");
+        return ResponseEntity.ok(usuarioService.update(usuarioDto));
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> delete(Integer idUsuario) {
+        log.info("eliminar usuario");
+        return ResponseEntity.ok(usuarioService.delete(idUsuario));
     }
 }

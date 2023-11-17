@@ -66,4 +66,22 @@ public class UsuarioServiceImplTest {
         assertEquals(usuarioEntity.getCellphone(), usuarioCreadoDto.getCellphone(), "Cellphone correcto del usuario creado.");
 
     }
+
+    @Test
+    @DisplayName("Modificar usuario")
+    void testModificarUsuario() {
+
+        UsuarioDto usuarioDto = usuarioBuilder.buildUsuarioDto();
+        UsuarioEntity usuarioEntity = usuarioBuilder.buildUsuarioEntity();
+        when(usuarioRepository.save(any(UsuarioEntity.class))).thenReturn(usuarioEntity);
+
+        UsuarioDto usuarioModificadoDto = usuarioService.update(usuarioDto);
+
+        assertNotNull(usuarioModificadoDto, "Usuario modificado no es nulo.");
+        assertEquals(usuarioEntity.getId(), usuarioModificadoDto.getId(), "Usuario modificado correctamente.");
+        assertEquals(usuarioEntity.getCellphone(), usuarioModificadoDto.getCellphone(), "Cellphone correcto del usuario modificado.");
+
+    }
+
+    
 }

@@ -9,6 +9,7 @@ import pe.com.bancom.infraestructure.repository.UsuarioRepository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -42,6 +43,16 @@ public class UsuarioServiceImpl implements UsuarioService {
         return createDtoFromEntity(usuarioEntity);
     }
 
+    @Override
+    public String delete(Integer idUsuario) {
+        Optional<UsuarioEntity> usuarioEntityOptional = this.usuarioRepository.findById(idUsuario);
+        if (usuarioEntityOptional.isPresent()) {
+            usuarioRepository.delete(usuarioEntityOptional.get());
+            return "Usuario eliminado correctamente.";
+        }
+        return "Usuario no pudo eliminarse correctamente.";
+    }
+
     private UsuarioEntity createEntityFromDto(UsuarioDto usuarioDto) {
         return UsuarioEntity.builder()
                 .name(usuarioDto.getName())
@@ -49,6 +60,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                 .cellphone(usuarioDto.getCellphone())
                 .password(usuarioDto.getPassword())
                 .dateCreation(usuarioDto.getDateCreation())
+                .dateModification(usuarioDto.getDateModification())
                 .build();
     }
 
@@ -56,5 +68,12 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioEntities.stream()
                 .map(UsuarioServiceImpl::createDtoFromEntity
                 ).toList();
+    }
+
+    public UsuarioDto update(UsuarioDto usuarioDto) {
+        usuarioDto.setDateModification(new Date());
+        UsuarioEntity usuarioEntity = createEntityFromDto(usuarioDto);
+        usuarioEntity = usuarioRepository.save(usuarioEntity);
+        return createDtoFromEntity(usuarioEntity);
     }
 }

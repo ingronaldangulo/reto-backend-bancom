@@ -10,4 +10,6 @@ public interface UsuarioService {
 
 
     UsuarioDto create(UsuarioDto usuarioDto);
+
+    String delete(Integer idUsuario);
 }
