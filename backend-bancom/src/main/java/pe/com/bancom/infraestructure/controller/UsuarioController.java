@@ -29,15 +29,15 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.create(usuarioDto));
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<UsuarioDto> update(UsuarioDto usuarioDto) {
+    @PutMapping("/modificar")
+    public ResponseEntity<UsuarioDto> update(@RequestBody UsuarioDto usuarioDto) {
         log.info("modificar usuario");
         return ResponseEntity.ok(usuarioService.update(usuarioDto));
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> delete(Integer idUsuario) {
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<String> delete(@PathVariable("id") Integer id) {
         log.info("eliminar usuario");
-        return ResponseEntity.ok(usuarioService.delete(idUsuario));
+        return ResponseEntity.ok(usuarioService.delete(id));
     }
 }

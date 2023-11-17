@@ -80,8 +80,8 @@ public class UsuarioControllerTest {
     void testModificarUsuario() {
 
         UsuarioDto usuarioDtoMock = usuarioBuilder.buildUsuarioDto();
-        UsuarioDto usuarioCreatedDtoMock = usuarioBuilder.buildUsuarioCreatedDto(usuarioDtoMock);
-        when(usuarioService.update(usuarioDtoMock)).thenReturn(usuarioCreatedDtoMock);
+        UsuarioDto usuarioUpdatedtoMock = usuarioBuilder.buildUsuarioUpdatedDto(usuarioDtoMock);
+        when(usuarioService.update(usuarioDtoMock)).thenReturn(usuarioUpdatedtoMock);
 
         ResponseEntity<UsuarioDto> responseEntity = usuarioController.update(usuarioDtoMock);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode(), "Estado de respuesta correcta.");
@@ -89,11 +89,11 @@ public class UsuarioControllerTest {
         UsuarioDto body = responseEntity.getBody();
         assertNotNull(body, "El cuerpo de respuesta es valido.");
 
-        assertEquals(usuarioCreatedDtoMock, body, "El usuario fue modificado correctamente.");
-        assertEquals(usuarioCreatedDtoMock.getId(), body.getId(), "ID modificado del usuario modificado.");
-        assertEquals(usuarioCreatedDtoMock.getCellphone(), body.getCellphone(), "Cellphone correcto del usuario modificado.");
-        assertEquals(usuarioCreatedDtoMock.getLastname(), body.getLastname(), "Lastname correcto del usuario modificado.");
-        assertEquals(usuarioCreatedDtoMock.getName(), body.getName(), "Name correcto del usuario modificado.");
+        assertEquals(usuarioUpdatedtoMock, body, "El usuario fue modificado correctamente.");
+        assertEquals(usuarioUpdatedtoMock.getId(), body.getId(), "ID modificado del usuario modificado.");
+        assertEquals(usuarioUpdatedtoMock.getCellphone(), body.getCellphone(), "Cellphone correcto del usuario modificado.");
+        assertEquals(usuarioUpdatedtoMock.getLastname(), body.getLastname(), "Lastname correcto del usuario modificado.");
+        assertEquals(usuarioUpdatedtoMock.getName(), body.getName(), "Name correcto del usuario modificado.");
 
     }
 

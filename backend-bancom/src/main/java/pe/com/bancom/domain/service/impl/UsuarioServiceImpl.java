@@ -1,6 +1,7 @@
 package pe.com.bancom.domain.service.impl;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pe.com.bancom.domain.dto.UsuarioDto;
 import pe.com.bancom.domain.entity.UsuarioEntity;
@@ -11,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class UsuarioServiceImpl implements UsuarioService {
@@ -71,9 +73,24 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     public UsuarioDto update(UsuarioDto usuarioDto) {
-        usuarioDto.setDateModification(new Date());
-        UsuarioEntity usuarioEntity = createEntityFromDto(usuarioDto);
-        usuarioEntity = usuarioRepository.save(usuarioEntity);
-        return createDtoFromEntity(usuarioEntity);
+        Optional<UsuarioEntity> usuarioEntityOptional = usuarioRepository.findById(usuarioDto.getId());
+        log.info("usuario existe: " + usuarioEntityOptional.isPresent());
+        if (usuarioEntityOptional.isPresent()) {
+            UsuarioEntity usuarioEntity = mapFieldsUpdated(usuarioDto, usuarioEntityOptional.get());
+            usuarioEntity = usuarioRepository.save(usuarioEntity);
+            return createDtoFromEntity(usuarioEntity);
+        }
+        return null;
+    }
+
+    private UsuarioEntity mapFieldsUpdated(UsuarioDto usuarioDto, UsuarioEntity usuarioEntity) {
+        usuarioEntity.setName(usuarioDto.getName());
+        usuarioEntity.setLastname(usuarioDto.getLastname());
+        usuarioEntity.setCellphone(usuarioDto.getCellphone());
+        usuarioEntity.setPassword(usuarioDto.getPassword());
+        usuarioEntity.setDateModification(new Date());
+        return usuarioEntity;
+
+
     }
 }

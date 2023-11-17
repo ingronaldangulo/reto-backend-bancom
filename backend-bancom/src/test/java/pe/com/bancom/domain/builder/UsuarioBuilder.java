@@ -96,4 +96,12 @@ public class UsuarioBuilder {
     }
 
 
+    public UsuarioDto buildUsuarioUpdatedDto(UsuarioDto usuarioDtoMock) {
+        usuarioDtoMock.setName("Juan");
+        usuarioDtoMock.setLastname("Diaz");
+        usuarioDtoMock.setCellphone("974748585");
+        usuarioDtoMock.setPassword("my pass 7485");
+        usuarioDtoMock.setDateModification(new Date());
+        return usuarioDtoMock;
+    }
 }
