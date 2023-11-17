@@ -19,9 +19,9 @@ public class UsuarioController {
 
     private final UsuarioServiceImpl usuarioService;
 
-    @GetMapping("/find/all")
+    @GetMapping("/listar")
     public ResponseEntity<List<UsuarioDto>> findAll() {
-        log.info("find all");
+        log.info("listar usuarios.");
         return ResponseEntity.ok(usuarioService.findAll());
     }
 }
