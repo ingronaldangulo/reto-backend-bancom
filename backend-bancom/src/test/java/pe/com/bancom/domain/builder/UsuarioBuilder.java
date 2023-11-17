@@ -67,4 +67,25 @@ public class UsuarioBuilder {
                         .dateCreation(new Date()).build());
         return usuarioDtos;
     }
+
+    public UsuarioEntity buildUsuarioEntity() {
+        return UsuarioEntity.builder()
+                .id(3)
+                .name("Cataleya")
+                .lastname("Vigo")
+                .cellphone("920203030")
+                .password("mypass5678")
+                .dateCreation(new Date()).build();
+
+    }
+
+    public UsuarioDto buildUsuarioDto() {
+        return UsuarioDto.builder()
+                .id(3)
+                .name("Cataleya")
+                .lastname("Vigo")
+                .cellphone("920203030")
+                .password("mypass5678")
+                .dateCreation(new Date()).build();
+    }
 }

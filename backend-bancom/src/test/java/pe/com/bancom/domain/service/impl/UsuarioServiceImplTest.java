@@ -16,6 +16,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -48,5 +49,21 @@ public class UsuarioServiceImplTest {
         assertEquals(3, usuarioDtos.size(), "Lista de usuarios es correcto.");
         assertEquals("Angulo", usuarioDtos.get(0).getLastname(), "Lastname correcto de la primera persona de la lista");
         assertEquals("920203030", usuarioDtos.get(2).getCellphone(), "Cellphone correcto de la última persona de la lista");
+    }
+
+    @Test
+    @DisplayName("Crear usuario")
+    void testCrearUsuario() {
+
+        UsuarioDto usuarioDto = usuarioBuilder.buildUsuarioDto();
+        UsuarioEntity usuarioEntity = usuarioBuilder.buildUsuarioEntity();
+        when(usuarioRepository.save(any(UsuarioEntity.class))).thenReturn(usuarioEntity);
+
+        UsuarioDto usuarioCreadoDto = usuarioService.create(usuarioDto);
+
+        assertNotNull(usuarioCreadoDto, "Usuario creado no es nulo.");
+        assertEquals(usuarioEntity.getId(), usuarioCreadoDto.getId(), "Usuario creado correctamente.");
+        assertEquals(usuarioEntity.getCellphone(), usuarioCreadoDto.getCellphone(), "Cellphone correcto del usuario creado.");
+
     }
 }
