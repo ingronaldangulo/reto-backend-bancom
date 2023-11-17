@@ -17,6 +17,6 @@ public class PostEntityTest {
                 .build();
 
         assertEquals(1, postEntity.getId());
-        assertEquals("Ronald",postEntity.getText());
+        assertEquals("Mi primer post",postEntity.getText());
     }
 }
