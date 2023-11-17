@@ -31,7 +31,7 @@ public class UsuarioBuilder {
                         .id(3)
                         .name("Cataleya")
                         .lastname("Vigo")
-                        .cellphone("9203030")
+                        .cellphone("920203030")
                         .password("mypass5678")
                         .dateCreation(new Date()).build());
         return usuarioEntities;
