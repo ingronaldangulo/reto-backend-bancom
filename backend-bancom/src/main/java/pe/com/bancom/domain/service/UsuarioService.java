@@ -9,4 +9,5 @@ public interface UsuarioService {
     List<UsuarioDto> findAll();
 
 
+    UsuarioDto create(UsuarioDto usuarioDto);
 }
