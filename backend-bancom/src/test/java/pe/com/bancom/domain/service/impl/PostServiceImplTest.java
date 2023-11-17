@@ -37,6 +37,9 @@ public class PostServiceImplTest {
     @Mock
     private UsuarioRepository usuarioRepository;
 
+    @Mock
+    private UsuarioServiceImpl usuarioService;
+
     private PostBuilder postBuilder;
 
     private UsuarioBuilder usuarioBuilder;
@@ -72,6 +75,7 @@ public class PostServiceImplTest {
         PostDto postDto = postBuilder.buildPostDto(usuarioDto);
         PostEntity postEntity = postBuilder.buildPostEntity(usuarioEntity);
 
+        when(usuarioService.findById(any(Integer.class))).thenReturn(usuarioEntity);
         when(postRepository.save(any(PostEntity.class))).thenReturn(postEntity);
 
         PostDto postCreadoDto = postService.create(postDto);

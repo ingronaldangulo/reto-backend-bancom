@@ -55,6 +55,12 @@ public class UsuarioServiceImpl implements UsuarioService {
         return "Usuario no pudo eliminarse correctamente.";
     }
 
+    @Override
+    public UsuarioEntity findById(Integer id) {
+        Optional<UsuarioEntity> usuarioEntityOptional = this.usuarioRepository.findById(id);
+        return usuarioEntityOptional.orElse(null);
+    }
+
     private UsuarioEntity createEntityFromDto(UsuarioDto usuarioDto) {
         return UsuarioEntity.builder()
                 .name(usuarioDto.getName())

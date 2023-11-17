@@ -35,6 +35,6 @@ public class PostEntity implements Serializable {
     private Date dateModification;
 
     @JoinColumn(name = "id_usuario", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private UsuarioEntity usuario;
 }

@@ -13,6 +13,7 @@ import pe.com.bancom.domain.entity.UsuarioEntity;
 import pe.com.bancom.infraestructure.repository.UsuarioRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -73,6 +74,8 @@ public class UsuarioServiceImplTest {
 
         UsuarioDto usuarioDto = usuarioBuilder.buildUsuarioDto();
         UsuarioEntity usuarioEntity = usuarioBuilder.buildUsuarioEntity();
+
+        when(usuarioRepository.findById(any(Integer.class))).thenReturn(Optional.of(usuarioEntity));
         when(usuarioRepository.save(any(UsuarioEntity.class))).thenReturn(usuarioEntity);
 
         UsuarioDto usuarioModificadoDto = usuarioService.update(usuarioDto);
@@ -83,5 +86,5 @@ public class UsuarioServiceImplTest {
 
     }
 
-    
+
 }

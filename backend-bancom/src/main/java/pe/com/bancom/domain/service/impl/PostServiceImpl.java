@@ -9,6 +9,7 @@ import pe.com.bancom.domain.entity.PostEntity;
 import pe.com.bancom.domain.entity.UsuarioEntity;
 import pe.com.bancom.domain.exceptions.UsuarioNotOwnerPost;
 import pe.com.bancom.domain.service.PostService;
+import pe.com.bancom.domain.service.UsuarioService;
 import pe.com.bancom.infraestructure.repository.PostRepository;
 
 import java.util.Date;
@@ -23,6 +24,8 @@ public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
 
+    private final UsuarioService usuarioService;
+
     public static PostDto createDtoFromEntity(PostEntity entity) {
         return PostDto.builder()
                 .id(entity.getId())
@@ -34,6 +37,7 @@ public class PostServiceImpl implements PostService {
     }
 
     private static UsuarioDto mapUsuarioEntityToDto(UsuarioEntity entity) {
+
         return UsuarioDto.builder()
                 .id(entity.getId())
                 .name(entity.getName())
@@ -54,7 +58,8 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDto create(PostDto postDto) {
         postDto.setDateCreation(new Date());
-        PostEntity postEntity = createEntityFromDto(postDto);
+        UsuarioEntity usuarioEntity = usuarioService.findById(postDto.getUsuario().getId());
+        PostEntity postEntity = createEntityFromDto(postDto, usuarioEntity);
         postEntity = postRepository.save(postEntity);
         return createDtoFromEntity(postEntity);
     }
@@ -69,16 +74,16 @@ public class PostServiceImpl implements PostService {
         return "Post no pudo eliminarse correctamente.";
     }
 
-    private PostEntity createEntityFromDto(PostDto postDto) {
+    private PostEntity createEntityFromDto(PostDto postDto, UsuarioEntity usuarioEntity) {
         return PostEntity.builder()
                 .text(postDto.getText())
-                .usuario(mapUsuarioDtoToEntity(postDto.getUsuario()))
+                .usuario(usuarioEntity)
                 .dateCreation(postDto.getDateCreation())
                 .dateModification(postDto.getDateModification())
                 .build();
     }
 
-    private UsuarioEntity mapUsuarioDtoToEntity(UsuarioDto usuarioDto) {
+    /*private UsuarioEntity mapUsuarioDtoToEntity(UsuarioDto usuarioDto) {
         return UsuarioEntity.builder()
                 .name(usuarioDto.getName())
                 .lastname(usuarioDto.getLastname())
@@ -87,7 +92,7 @@ public class PostServiceImpl implements PostService {
                 .dateCreation(usuarioDto.getDateCreation())
                 .dateModification(usuarioDto.getDateModification())
                 .build();
-    }
+    }*/
 
     private List<PostDto> mapEntitiesToDtos(List<PostEntity> postEntities) {
         return postEntities.stream()
