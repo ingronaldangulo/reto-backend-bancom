@@ -7,7 +7,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import pe.com.bancom.domain.builder.UsuarioBuilder;
 import pe.com.bancom.domain.dto.UsuarioDto;
+import pe.com.bancom.domain.entity.UsuarioEntity;
 import pe.com.bancom.infraestructure.repository.UsuarioRepository;
 
 import java.util.List;
@@ -30,14 +32,14 @@ public class UsuarioServiceImplTest {
 
     @BeforeEach
     void beforeEach() {
-        usuarioBuilder = new usuarioBuilder();
+        usuarioBuilder = new UsuarioBuilder();
     }
 
     @Test
     @DisplayName("Listar usuarios")
     void testListarUsuarios() {
 
-        List<UsuarioRepository> lstUsuarioRepositoryList = usuarioBuilder.buildListaUsuarios();
+        List<UsuarioEntity> lstUsuarioRepositoryList = usuarioBuilder.buildListaUsuarios();
         when(usuarioRepository.findAll()).thenReturn(lstUsuarioRepositoryList);
 
         List<UsuarioDto> usuarioDtos = usuarioService.findAll();
