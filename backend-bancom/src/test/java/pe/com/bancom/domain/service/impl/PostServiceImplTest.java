@@ -13,14 +13,14 @@ import pe.com.bancom.domain.dto.PostDto;
 import pe.com.bancom.domain.dto.UsuarioDto;
 import pe.com.bancom.domain.entity.PostEntity;
 import pe.com.bancom.domain.entity.UsuarioEntity;
+import pe.com.bancom.domain.exceptions.UsuarioNotOwnerPost;
 import pe.com.bancom.infraestructure.repository.PostRepository;
 import pe.com.bancom.infraestructure.repository.UsuarioRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -101,6 +101,24 @@ public class PostServiceImplTest {
         assertNotNull(postModificadoDto, "Post modificado no es nulo.");
         assertEquals(postEntity.getId(), postModificadoDto.getId(), "Post modificado correctamente.");
         assertEquals(postEntity.getText(), postModificadoDto.getText(), "Text correcto del post modificado.");
+
+    }
+
+    @Test
+    @DisplayName("Modificar post que no eres autor")
+    void testModificarPostQueNoEresAutor() {
+
+        UsuarioDto usuarioDto = usuarioBuilder.buildUsuarioExceptionDto();
+        UsuarioEntity usuarioEntity = usuarioBuilder.buildUsuarioEntity();
+
+        PostDto postDto = postBuilder.buildPostDto(usuarioDto);
+        PostEntity postEntity = postBuilder.buildPostEntity(usuarioEntity);
+
+        when(postRepository.findById(any(Integer.class))).thenReturn(Optional.of(postEntity));
+
+        assertThrows(UsuarioNotOwnerPost.class,
+                () -> postService.update(postDto),
+                () -> "No puedes modificar un post que no eres autor.");
 
     }
 

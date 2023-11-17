@@ -104,4 +104,14 @@ public class UsuarioBuilder {
         usuarioDtoMock.setDateModification(new Date());
         return usuarioDtoMock;
     }
+
+    public UsuarioDto buildUsuarioExceptionDto() {
+        return UsuarioDto.builder()
+                .id(2)
+                .name("Virginia")
+                .lastname("Guarniz")
+                .cellphone("958584646")
+                .password("mypass4685")
+                .dateCreation(new Date()).build();
+    }
 }
